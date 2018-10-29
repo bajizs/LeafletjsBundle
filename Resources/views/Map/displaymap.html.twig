@@ -1,0 +1,16 @@
+<div id="{{mapname}}" {% if options.style is defined %}style="{{ options.style }}"{% endif %} class="leaflet_map {{ options.class }}"></div>
+<script type="javascript">
+{% autoescape 'js' %}    
+    var lm_{{mapname}} = L.map('{{mapname}}').setView([{{view.long}},{{view.lat}}], {{view.zoom}});
+    {% for point in points %}
+        {% include 'CNTLeafletjsBundle:Objects:marker.js.twig' with {'point': point, 'mapname': mapname} only %}
+    {% endfor %}
+    {% if view.findbest %}
+        lm_{{mapname}}.fitBounds([
+            {% for point in points %}
+                [{{point.longitude}}, {{point.latitude}}]{% if not loop.last %},{% endif %}
+            {% endfor %}
+        ])
+    {% endif %}
+{% endautoescape %}
+</script>

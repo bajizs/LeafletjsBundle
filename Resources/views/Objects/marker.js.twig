@@ -1,0 +1,2 @@
+point=L.marker([{{point.longitude}}, {{point.latitude}}]).addTo(lm_{{mapname}});
+{% include 'CNTLeafletjsBundle:Objects:popup.js.twig' with {'popupfor': 'point', 'construct_from': point} only %}
